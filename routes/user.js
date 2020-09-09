@@ -1,47 +1,13 @@
 var express = require('express');
-var router = express.Router();
 const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./db/test.sqlite');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+var router = express.Router();
+const db = new sqlite3.Database('./db/test.sqlite');
 const saltRounds = 10;
 
-// function registerUser(res, email, plainPass) {
-//     bcrypt.hash(plainPass, saltRounds, function(err, hash) {
-//         if (err) {
-//             console.log(err);
-//             return res.status(500).json({
-//                 data: {
-//                     msg: "Hash failed",
-//                     err: err
-//                 }
-//             });
-//         }
-//         db.run("INSERT INTO users (email, password) VALUES (?, ?)", email, hash, (dbErr) => {
-//             if (dbErr) {
-//                 return res.status(500).json({
-//                     data: {
-//                         msg: "Database failed to insert",
-//                         err: dbErr
-//                     }
-//                 });
-//             }
-//         });
-//         return res.status(201).json({
-//             data: {
-//                 msg: "Registered user"
-//             }
-//         });
-//     });
-// }
-
-// function compare(plain, hash) {
-//     bcrypt.compare(plain, hash, function(err, res) {
-//     // res innehåller nu true eller false beroende på om det är rätt lösenord.
-//     });
-// }
-
 router.post('/register', function(req, res, next) {
-    // registerUser(res, req.body.email, req.body.pass);
     var email = req.body.email;
     var plainPass = req.body.pass;
 
@@ -110,9 +76,13 @@ router.post('/login', function(req, res, next) {
                 });
             }
             if (result) {
+                const payload = { email: email };
+                const secret = process.env.JWT_SECRET;
+                const token = jwt.sign(payload, secret, { expiresIn: '1h'});
                 return res.status(200).json({
                     data: {
-                        msg: "User logged in!"
+                        msg: "User logged in!",
+                        token: token
                     }
                 });
             } else {
