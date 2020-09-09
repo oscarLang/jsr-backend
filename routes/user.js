@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 var router = express.Router();
 const db = new sqlite3.Database('./db/test.sqlite');
 const saltRounds = 10;
+const secret = process.env.JWT_SECRET;
 
 router.post('/register', function(req, res, next) {
     var email = req.body.email;
@@ -77,7 +78,6 @@ router.post('/login', function(req, res, next) {
             }
             if (result) {
                 const payload = { email: email };
-                const secret = process.env.JWT_SECRET;
                 const token = jwt.sign(payload, secret, { expiresIn: '1h'});
                 return res.status(200).json({
                     data: {

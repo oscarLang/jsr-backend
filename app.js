@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require('cors');
 const morgan = require('morgan');
+const jwt = require('jsonwebtoken');
 
 const index = require('./routes/index');
 const hello = require('./routes/hello');
@@ -21,7 +22,30 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 app.use((req, res, next) => {
-    next();
+    let routesWithoutAuth = [
+        "/",
+        "/user/register",
+        "/user/login"
+    ];
+    if (routesWithoutAuth.includes(req.path)) {
+        console.log("no auth");
+        return next();
+    }
+    const token = req.headers['x-access-token'];
+    if (token) {
+        jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
+            if (err) {
+                return res.status(500).json({
+                    data: {
+                        msg: "Jwt verification failed",
+                        err: err
+                    }
+                });
+            }
+            console.log("auth");
+            next();
+        });
+    }
 });
 
 app.use('/', index);
