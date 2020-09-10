@@ -77,8 +77,8 @@ router.post('/login', function(req, res, next) {
                 });
             }
             if (result) {
-                const payload = { email: email };
-                const token = jwt.sign(payload, secret, { expiresIn: '1h'});
+                let payload = { email: email };
+                let token = jwt.sign(payload, secret, { expiresIn: '1h'});
                 return res.status(200).json({
                     data: {
                         msg: "User logged in!",

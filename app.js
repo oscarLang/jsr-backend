@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 
 const index = require('./routes/index');
 const hello = require('./routes/hello');
+const reports = require('./routes/reports');
 const user = require('./routes/user');
 
 const app = express();
@@ -51,6 +52,7 @@ app.use((req, res, next) => {
 app.use('/', index);
 app.use('/hello', hello);
 app.use('/user', user);
+app.use('/reports', reports);
 
 app.use((req, res, next) => {
     var err = new Error("Not Found");
