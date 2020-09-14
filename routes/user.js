@@ -3,6 +3,7 @@ const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+
 var router = express.Router();
 const db = new sqlite3.Database('./db/test.sqlite');
 const saltRounds = 10;
@@ -10,7 +11,7 @@ const secret = process.env.JWT_SECRET;
 
 router.post('/register', function(req, res, next) {
     var email = req.body.email;
-    var plainPass = req.body.pass;
+    var plainPass = req.body.password;
 
     bcrypt.hash(plainPass, saltRounds, function(err, hash) {
         if (err) {
@@ -42,7 +43,7 @@ router.post('/register', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
     var email = req.body.email;
-    var plainPass = req.body.pass;
+    var plainPass = req.body.password;
 
     if (!email || !plainPass) {
         return res.status(401).json({
@@ -79,12 +80,7 @@ router.post('/login', function(req, res, next) {
             if (result) {
                 let payload = { email: email };
                 let token = jwt.sign(payload, secret, { expiresIn: '1h'});
-                return res.status(200).json({
-                    data: {
-                        msg: "User logged in!",
-                        token: token
-                    }
-                });
+                return res.status(200).cookie('jwt', token, {maxAge: 86400000}).send("OK");
             } else {
                 return res.status(401).json({
                     data: {

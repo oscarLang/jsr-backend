@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const cors = require('cors');
 const morgan = require('morgan');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser')
+
 
 const index = require('./routes/index');
 const hello = require('./routes/hello');
@@ -11,11 +13,14 @@ const user = require('./routes/user');
 
 const app = express();
 const port = 1337;
-
-
+var corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true
+}
+app.use(cors(corsOptions));
+app.use(cookieParser())
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.use(cors());
 
 if (process.env.NODE_ENV !== 'test') {
     // use morgan to log at command line
@@ -26,13 +31,13 @@ app.use((req, res, next) => {
     let routesWithoutAuth = [
         "/",
         "/user/register",
-        "/user/login"
+        "/user/login",
     ];
-    if (routesWithoutAuth.includes(req.path)) {
+    if (routesWithoutAuth.includes(req.path) || req.path.includes("reports/week/")) {
         console.log("no auth");
         return next();
     }
-    const token = req.headers['x-access-token'];
+    const token = req.cookies.jwt;
     if (token) {
         jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
             if (err) {
@@ -42,9 +47,16 @@ app.use((req, res, next) => {
                         err: err
                     }
                 });
+            } else {
+                next();
+                console.log("auth");
             }
-            console.log("auth");
-            next();
+        });
+    } else {
+        return res.status(401).json({
+            data: {
+                msg: "No token specified"
+            }
         });
     }
 });

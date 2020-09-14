@@ -4,7 +4,6 @@ const sqlite3 = require('sqlite3').verbose();
 var router = express.Router();
 const db = new sqlite3.Database('./db/test.sqlite');
 router.get('/week/:week_id', function(req, res) {
-    console.log(typeof Number(req.params.week_id));
     let id = Number(req.params.week_id);
     db.get("SELECT text_data FROM reports WHERE week = ?;", id, (err, row) => {
         if (err) {
@@ -15,14 +14,15 @@ router.get('/week/:week_id', function(req, res) {
             });
         }
         console.log(row);
-        if (!row) {
+        if (row == null) {
             return res.status(401).json({
                 data: {
                     msg: "No report with week id " + req.params.week_id ,
                 }
             });
         }
-        res.status(200).json({
+        
+        return res.status(200).json({
             data: {
                 text: row.text_data
             }
@@ -33,6 +33,7 @@ router.get('/week/:week_id', function(req, res) {
 router.post('/', function(req, res) {
     var week = Number(req.body.week);
     var text = req.body.text;
+    console.log("post report");
     console.log(week);
     console.log(text);
     if (!week || !text) {
