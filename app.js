@@ -7,7 +7,6 @@ const cookieParser = require('cookie-parser')
 
 
 const index = require('./routes/index');
-const hello = require('./routes/hello');
 const reports = require('./routes/reports');
 const user = require('./routes/user');
 
@@ -62,7 +61,6 @@ app.use((req, res, next) => {
 });
 
 app.use('/', index);
-app.use('/hello', hello);
 app.use('/user', user);
 app.use('/reports', reports);
 
