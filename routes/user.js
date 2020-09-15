@@ -10,6 +10,7 @@ const saltRounds = 10;
 const secret = process.env.JWT_SECRET;
 
 router.post('/register', function(req, res, next) {
+    var username = req.body.username;
     var email = req.body.email;
     var plainPass = req.body.password;
 
@@ -23,7 +24,7 @@ router.post('/register', function(req, res, next) {
                 }
             });
         }
-        db.run("INSERT INTO users (email, password) VALUES (?, ?)", email, hash, (dbErr) => {
+        db.run("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", username, email, hash, (dbErr) => {
             if (dbErr) {
                 return res.status(500).json({
                     data: {
