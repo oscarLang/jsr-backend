@@ -11,5 +11,3 @@ Runs the server in the development mode.
 Open [http://localhost:1337](http://localhost:1337) to view it in the browser.
 
 The server will restart if you make edits.
-
-You will also see any lint errors in the console.
