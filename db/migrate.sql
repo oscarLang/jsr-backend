@@ -13,7 +13,10 @@ CREATE TABLE IF NOT EXISTS reports (
     UNIQUE(week)
 );
 
-INSERT INTO reports (week, text_data) VALUES (1, "## Available Scripts
+INSERT INTO reports (week, text_data) VALUES (1, "
+[https://github.com/oscarLang/jsr-frontend](github link)
+
+## Available Scripts
 In the project directory, you can run:
 
 ### `npm install`
@@ -27,7 +30,10 @@ Builds the app for production to the `build` folder.
 It correctly bundles React in production mode and optimizes the build for the best performance. The build is minified and the filenames include the hashes. Your app is ready to be deployed!");
 
 
-INSERT INTO reports (week, text_data) VALUES (2, "# Available Scripts
+INSERT INTO reports (week, text_data) VALUES (2, "
+[https://github.com/oscarLang/jsr-backend](github link)
+
+# Available Scripts
 In the project directory, you can run:
 
 ### `npm install`
