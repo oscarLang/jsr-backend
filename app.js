@@ -13,7 +13,7 @@ const user = require('./routes/user');
 const app = express();
 const port = 1337;
 var corsOptions = {
-  origin: ['http://localhost:3000', "https://oscarlang.me/"],
+  origin: 'https://oscarlang.me',
   credentials: true
 }
 app.use(cors(corsOptions));
