@@ -17,9 +17,7 @@ var whiteList = ['http://localhost:3000', "https://oscarlang.me"];
 
 var corsOptions = {
 
-	origin: function(origin, callback){
-      // allow requests with no origin
-      // (like mobile apps or curl requests)
+	origin: function(origin, callback) {
       if(!origin) return callback(null, true);
       if(whiteList.indexOf(origin) === -1){
         var msg = 'The CORS policy for this site does not ' +
@@ -51,6 +49,7 @@ app.use((req, res, next) => {
         return next();
     }
     const token = req.cookies.jwt;
+    console.log(token);
     if (token) {
         jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
             if (err) {
