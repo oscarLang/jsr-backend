@@ -13,7 +13,6 @@ router.get('/week/:week_id', function(req, res) {
                 }
             });
         }
-        console.log(row);
         if (row == null) {
             return res.status(401).json({
                 data: {
@@ -21,7 +20,7 @@ router.get('/week/:week_id', function(req, res) {
                 }
             });
         }
-        
+
         return res.status(200).json({
             data: {
                 text: row.text_data
@@ -33,9 +32,6 @@ router.get('/week/:week_id', function(req, res) {
 router.post('/', function(req, res) {
     var week = Number(req.body.week);
     var text = req.body.text;
-    console.log("post report");
-    console.log(week);
-    console.log(text);
     if (!week || !text) {
         return res.status(401).json({
             data: {

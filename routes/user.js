@@ -100,7 +100,6 @@ router.get('/all', function(req, res) {
         if (err) {
             return false;
         }
-        console.log(row);
         res.status(200).json({
             data: {
                 msg: "Got a POST request, sending back 201 Created",
