@@ -12,9 +12,23 @@ const user = require('./routes/user');
 
 const app = express();
 const port = 1337;
+
+var whiteList = ['http://localhost:3000', "https://oscarlang.me"];
+
 var corsOptions = {
-  origin: 'https://oscarlang.me',
-  credentials: true
+
+	origin: function(origin, callback){
+      // allow requests with no origin
+      // (like mobile apps or curl requests)
+      if(!origin) return callback(null, true);
+      if(whiteList.indexOf(origin) === -1){
+        var msg = 'The CORS policy for this site does not ' +
+                  'allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+  	credentials: true
 }
 app.use(cors(corsOptions));
 app.use(cookieParser())
