@@ -82,7 +82,7 @@ router.post('/login', function(req, res, next) {
                 let payload = { email: email };
                 let token = jwt.sign(payload, secret, { expiresIn: '12h'});
                 console.log(token);
-                return res.status(200).cookie('jwt', token, {maxAge: 604800000, secure:true}).send("OK");
+                return res.status(200).cookie('jwt', token, {maxAge: 604800000, secure:true, domain: ".oscarlang.me"}).send("OK");
             } else {
                 return res.status(401).json({
                     data: {
