@@ -80,9 +80,9 @@ router.post('/login', function(req, res, next) {
             }
             if (result) {
                 let payload = { email: email };
-                let token = jwt.sign(payload, secret, { expiresIn: '1h'});
+                let token = jwt.sign(payload, secret, { expiresIn: '12h'});
                 console.log(token);
-                return res.status(200).cookie('jwt', token, {maxAge: 86400000, secure:true, sameSite: "Lax"}).send("OK");
+                return res.status(200).cookie('jwt', token, {maxAge: 604800000, secure:true, sameSite: "Lax"}).send("OK");
             } else {
                 return res.status(401).json({
                     data: {
