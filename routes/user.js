@@ -81,8 +81,14 @@ router.post('/login', function(req, res, next) {
             if (result) {
                 let payload = { email: email };
                 let token = jwt.sign(payload, secret, { expiresIn: '12h'});
-                console.log(token);
-                return res.status(200).cookie('jwt', token, {maxAge: 604800000, secure:true, domain: ".oscarlang.me"}).send("OK");
+                // console.log(token);
+                let cookieSettings = {maxAge: 604800000};
+                if (process.env.NODE_ENV === 'production') {
+                    cookieSettings.secure = true;
+                    cookieSettings.domain = ".oscarlang.me";
+                }
+                console.log(cookieSettings);
+                return res.status(200).cookie('jwt', token, cookieSettings).send("OK");
             } else {
                 return res.status(401).json({
                     data: {

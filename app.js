@@ -16,7 +16,6 @@ const port = 1337;
 var whiteList = ['http://localhost:3000', "https://oscarlang.me"];
 
 var corsOptions = {
-
 	origin: function(origin, callback) {
       if(!origin) return callback(null, true);
       if(whiteList.indexOf(origin) === -1){
