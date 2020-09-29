@@ -1,10 +1,7 @@
 const reportModel = require("../models/reports");
-
 var express = require('express');
-const sqlite3 = require('sqlite3').verbose();
-
 var router = express.Router();
-const db = new sqlite3.Database('./db/test.sqlite');
+
 router.get('/week/:week_id', async function(req, res) {
     let id = Number(req.params.week_id);
     var response = await reportModel.get(id);

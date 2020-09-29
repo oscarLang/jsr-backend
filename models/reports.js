@@ -1,5 +1,4 @@
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./db/test.sqlite');
+const db = require("../db/database.js");
 
 async function getReport(week) {
     return new Promise(resolve => {
