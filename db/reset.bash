@@ -1,1 +1,1 @@
-sqlite3 test.sqlite ".read migrate.sql"
+sqlite3 texts.sqlite ".read migrate.sql"
