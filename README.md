@@ -1,5 +1,11 @@
 [![Build Status](https://travis-ci.org/oscarLang/jsr-backend.svg?branch=master)](https://travis-ci.org/oscarLang/jsr-backend)
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/oscarLang/jsr-backend/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/oscarLang/jsr-backend/?branch=master)
+
+[![Code Coverage](https://scrutinizer-ci.com/g/oscarLang/jsr-backend/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/oscarLang/jsr-backend/?branch=master)
+
+[![Build Status](https://scrutinizer-ci.com/g/oscarLang/jsr-backend/badges/build.png?b=master)](https://scrutinizer-ci.com/g/oscarLang/jsr-backend/build-status/master)
+
 # Available Scripts
 In the project directory, you can run:
 
