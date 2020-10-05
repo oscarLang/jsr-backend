@@ -13,6 +13,7 @@ git:
 
 before_script:
     - npm install
+    - npm run pretest
 
 script:
-    - npm test
+    - npm run test
