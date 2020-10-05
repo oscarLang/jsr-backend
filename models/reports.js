@@ -17,7 +17,7 @@ async function getReport(week) {
             } else {
                 if (row == null) {
                     data = {
-                        status: 401,
+                        status: 404,
                         msg: "No report with week id " + week,
                         text:""
                     };

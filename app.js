@@ -38,6 +38,9 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 app.use((req, res, next) => {
+	if (process.env.NODE_ENV === 'test') {
+	    return next();
+	}
     let routesWithoutAuth = [
         "/",
         "/user/register",
@@ -48,7 +51,6 @@ app.use((req, res, next) => {
         return next();
     }
     const token = req.cookies.jwt;
-    console.log(token);
     if (token) {
         jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
             if (err) {
@@ -99,4 +101,5 @@ app.use((err, req, res, next) => {
 });
 
 // Start up server
-app.listen(port, () => console.log(`Example API listening on port ${port}!`));
+const server = app.listen(port, () => console.log(`Example API listening on port ${port}!`));
+module.exports = server;

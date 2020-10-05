@@ -14,6 +14,13 @@ router.post('/register', async function(req, res, next) {
     var username = req.body.username;
     var email = req.body.email;
     var plainPass = req.body.password;
+    if (!username || !email || !plainPass) {
+        return res.status(401).json({
+            data: {
+                msg: "Operation failed. All fields must be filled"
+            }
+        });
+    }
     var response = await userModel.insertUser(username, email, plainPass);
     return res.status(response.status).json({
         data: {
@@ -38,7 +45,7 @@ router.post('/login', async function(req, res, next) {
     if (user.err) {
         return res.status(user.status).json({
             data: {
-                msg: response.msg
+                msg: res.msg
             }
         });
     }
