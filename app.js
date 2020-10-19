@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser')
 const index = require('./routes/index');
 const reports = require('./routes/reports');
 const user = require('./routes/user');
+const chat = require('./routes/chat');
 
 const app = express();
 const port = 1337;
@@ -45,6 +46,7 @@ app.use((req, res, next) => {
         "/",
         "/user/register",
         "/user/login",
+		"/chat"
     ];
     if (routesWithoutAuth.includes(req.path) || req.path.includes("reports/week/")) {
         console.log("no auth");
@@ -77,6 +79,7 @@ app.use((req, res, next) => {
 app.use('/', index);
 app.use('/user', user);
 app.use('/reports', reports);
+app.use('/chat', chat);
 
 app.use((req, res, next) => {
     var err = new Error("Not Found");
