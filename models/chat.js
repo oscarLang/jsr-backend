@@ -13,11 +13,11 @@ async function insertChatMessage(message) {
     return res;
 }
 
-async function getLatestChatMessages(limit=10) {
+async function getLatestChatMessages(skip, limit) {
     const client  = await mongo.connect(dsn);
     const db = await client.db('chat');
     const col = await db.collection('history');
-    const res = await col.find().sort({'_id':-1}).limit(limit).toArray();
+    const res = await col.find().sort({'_id':-1}).skip(skip).limit(limit).toArray();
 
     await client.close();
     return res;

@@ -4,7 +4,13 @@ const chatModel = require("../models/chat");
 
 
 router.get('/', async function(req, res) {
-    var response = await chatModel.getLatestChatMessages(5);
+    let skip = 0;
+    let limit = 5;
+    if (req.query.skip && req.query.limit) {
+        skip = Number(req.query.skip);
+        limit = Number(req.query.limit);
+    }
+    var response = await chatModel.getLatestChatMessages(skip, limit);
     return res.status(200).json(response);
 });
 
