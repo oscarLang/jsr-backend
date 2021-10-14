@@ -14,7 +14,7 @@ const chat = require('./routes/chat');
 const app = express();
 const port = 1337;
 
-var whiteList = ['http://localhost:3000', "https://oscarlang.me"];
+var whiteList = ['http://localhost:3000', "https://oscarlang.tech"];
 
 var corsOptions = {
 	origin: function(origin, callback) {
